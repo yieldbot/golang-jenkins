@@ -46,3 +46,10 @@ type Computer struct {
 	OfflineCauseReason string `json:"offlineCauseReason"`
 	TemporarilyOffline bool   `json:"temporarilyOffline"`
 }
+
+type ComputerConfig struct {
+	Name         string `xml:"name"`
+	NumExecutors int    `xml:"numExecutors"`
+	Mode         string `xml:"mode"`
+	Label        string `xml:"label"`
+}

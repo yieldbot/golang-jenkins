@@ -303,6 +303,12 @@ func (jenkins *Jenkins) GetComputer(name string) (computer Computer, err error) 
 	return
 }
 
+// GetComputerConfig returns the ComputerConfig object for a given computer name
+func (jenkins *Jenkins) GetComputerConfig(name string) (cf ComputerConfig, err error) {
+	err = jenkins.getXml(fmt.Sprintf("/computer/%s/config.xml", name), nil, &cf)
+	return
+}
+
 // hasParams returns a boolean value indicating if the job is parameterized
 func hasParams(job Job) bool {
 	for _, action := range job.Actions {
