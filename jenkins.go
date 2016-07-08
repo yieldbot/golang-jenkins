@@ -20,6 +20,7 @@ type Auth struct {
 type Jenkins struct {
 	auth    *Auth
 	baseUrl string
+	client  *http.Client
 }
 
 func NewJenkins(auth *Auth, baseUrl string) *Jenkins {
@@ -27,6 +28,10 @@ func NewJenkins(auth *Auth, baseUrl string) *Jenkins {
 		auth:    auth,
 		baseUrl: baseUrl,
 	}
+}
+
+func (jenkins *Jenkins) OverrideHTTPClient(c *http.Client) {
+	jenkins.client = c
 }
 
 func (jenkins *Jenkins) buildUrl(path string, params url.Values) (requestUrl string) {
@@ -44,6 +49,9 @@ func (jenkins *Jenkins) buildUrl(path string, params url.Values) (requestUrl str
 func (jenkins *Jenkins) sendRequest(req *http.Request) (*http.Response, error) {
 	if jenkins.auth != nil {
 		req.SetBasicAuth(jenkins.auth.Username, jenkins.auth.ApiToken)
+	}
+	if jenkins.client != nil {
+		return jenkins.client.Do(req)
 	}
 	return http.DefaultClient.Do(req)
 }
