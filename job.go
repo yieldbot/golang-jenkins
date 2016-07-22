@@ -92,6 +92,11 @@ type MavenJobItem struct {
 	Postbuilders                     PostBuilders         `xml:"postbuilders"`
 }
 
+type Project struct {
+	AssignedNode string `xml:"assignedNode"`
+	Disabled     bool   `xml:"disabled"`
+}
+
 type Scm struct {
 	ScmContent
 	Class  string `xml:"class,attr"`

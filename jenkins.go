@@ -175,6 +175,12 @@ func (jenkins *Jenkins) GetJobConfig(name string) (job MavenJobItem, err error) 
 	return
 }
 
+//GetJobProperties returns a Project
+func (jenkins *Jenkins) GetJobProperties(name string) (job Project, err error) {
+	err = jenkins.getXml(fmt.Sprintf("/job/%s/config.xml", name), nil, &job)
+	return
+}
+
 // GetBuild returns a number-th build result of specified job.
 func (jenkins *Jenkins) GetBuild(job Job, number int) (build Build, err error) {
 	err = jenkins.get(fmt.Sprintf("/job/%s/%d", job.Name, number), nil, &build)
